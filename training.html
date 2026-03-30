@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training | Hardwood Academy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-card2: #222222;
+      --orange: #e07b2e;
+      --orange-light: #f59340;
+      --text: #f0ede8;
+      --text-muted: #8a8580;
+      --text-dim: #5a5550;
+      --border: #2a2a2a;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15,15,15,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-logo-badge {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .nav-logo-text {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--bg-card); }
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      background: var(--orange) !important;
+      color: #fff !important;
+      font-weight: 700;
+      padding: 0.45rem 1rem !important;
+    }
+
+    .nav-cta:hover { background: var(--orange-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── SESSION BREAKDOWN ── */
+    .session-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .session-step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      background: var(--bg-card);
+      transition: background 0.2s;
+    }
+
+    .session-step:hover { background: var(--bg-card2); }
+
+    .step-time {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid var(--border);
+      background: rgba(224, 123, 46, 0.06);
+    }
+
+    .step-time span:first-child {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .step-time span:last-child {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .step-content {
+      padding: 1.5rem;
+    }
+
+    .step-content h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── DRILLS GRID ── */
+    .drills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .drill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .drill-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .drill-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .drill-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      font-family: 'Arial Black', sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    .drill-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .drill-tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.68rem;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(224,123,46,0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* ── WHAT TO EXPECT ── */
+    .expect-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .expect-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .expect-number {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(224,123,46,0.25);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .expect-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    .expect-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 2rem;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      text-align: center;
+      padding: 5rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-band h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-band h2 em { font-style: italic; color: var(--orange); }
+
+    .cta-band p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--orange-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: 'Arial', sans-serif;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-family: 'Arial', sans-serif;
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .session-step { grid-template-columns: 60px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/" class="nav-logo">
+      <div class="nav-logo-badge">HA</div>
+      <span class="nav-logo-text">Hardwood Academy</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/about.html">About</a></li>
+      <li><a href="training.html" class="active">Training</a></li>
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/services.html">Services</a></li>
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/contact.html">Contact</a></li>
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/contact.html" class="nav-cta">Book Free Session</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">The Training Experience</div>
+    <h1>What Happens <em>Every Session.</em></h1>
+    <p>No two sessions are identical — but every single one follows a structure designed to maximize improvement. Here's exactly what your player can expect when they step on the court with Coach Ty.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- SESSION BREAKDOWN -->
+  <div class="section">
+    <div class="section-eyebrow">Session Structure</div>
+    <h2 class="section-title">60 minutes. <em>Zero wasted reps.</em></h2>
+    <p class="section-subtitle">Every session is built around your player — not a generic curriculum. Here's how a typical 1-on-1 session flows from start to finish.</p>
+
+    <div class="session-steps">
+      <div class="session-step">
+        <div class="step-time"><span>0–5</span><span>min</span></div>
+        <div class="step-content">
+          <h3>Warm-Up & Check-In</h3>
+          <p>Dynamic movement, ball-handling warm-ups, and a quick check-in on how your player is feeling. Coach Ty also reviews notes from the last session to pick up exactly where they left off.</p>
+        </div>
+      </div>
+      <div class="session-step">
+        <div class="step-time"><span>5–20</span><span>min</span></div>
+        <div class="step-content">
+          <h3>Fundamentals Focus</h3>
+          <p>Targeted work on the specific fundamental that needs the most attention — ball handling, footwork, shooting form, or defensive stance. High repetition, real-time feedback on every rep.</p>
+        </div>
+      </div>
+      <div class="session-step">
+        <div class="step-time"><span>20–40</span><span>min</span></div>
+        <div class="step-content">
+          <h3>Skill Development Block</h3>
+          <p>The heart of the session. Progressive drills that build on the fundamentals — from stationary to moving, from controlled to game-speed. Drills are chosen specifically for your player's goals.</p>
+        </div>
+      </div>
+      <div class="session-step">
+        <div class="step-time"><span>40–55</span><span>min</span></div>
+        <div class="step-content">
+          <h3>Competitive Application</h3>
+          <p>Skills get tested in competitive situations — 1-on-1 games, shooting challenges, and timed drills. This is where the practice transfers to real game instincts. Players learn to perform under pressure.</p>
+        </div>
+      </div>
+      <div class="session-step">
+        <div class="step-time"><span>55–60</span><span>min</span></div>
+        <div class="step-content">
+          <h3>Cool-Down & Progress Notes</h3>
+          <p>Coach Ty documents what was worked on, what improved, and what to focus on next session. Parents receive a quick verbal recap so everyone stays aligned on the player's development.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- DRILLS -->
+  <div class="section">
+    <div class="section-eyebrow">What We Train</div>
+    <h2 class="section-title">Drills built for <em>real games.</em></h2>
+    <p class="section-subtitle">Every drill Coach Ty uses has a direct connection to game situations. No gimmicks — just the fundamentals that win games at every level.</p>
+
+    <div class="drills-grid">
+      <div class="drill-card">
+        <div class="drill-icon">🏀</div>
+        <h3>Ball Handling & Dribbling</h3>
+        <p>Two-ball drills, cone sequences, pressure dribbling, and change-of-direction moves that build confident, instinctive handles in traffic.</p>
+        <span class="drill-tag">All Levels</span>
+      </div>
+      <div class="drill-card">
+        <div class="drill-icon">🎯</div>
+        <h3>Shooting Mechanics</h3>
+        <p>Form shooting from close range, progressive catch-and-shoot reps, off-the-dribble pull-ups, and free throw consistency — from the ground up.</p>
+        <span class="drill-tag">All Levels</span>
+      </div>
+      <div class="drill-card">
+        <div class="drill-icon">⚡</div>
+        <h3>Footwork & Finishing</h3>
+        <p>Euro steps, hop steps, drop steps, and layup packages from both sides. Footwork is the foundation of everything — we make it automatic.</p>
+        <span class="drill-tag">Intermediate+</span>
+      </div>
+      <div class="drill-card">
+        <div class="drill-icon">👁️</div>
+        <h3>Passing & Court Vision</h3>
+        <p>Chest passes, bounce passes, skip passes, and reading the defense. Players learn when to attack, when to kick, and how to see the whole court.</p>
+        <span class="drill-tag">All Levels</span>
+      </div>
+      <div class="drill-card">
+        <div class="drill-icon">🛡️</div>
+        <h3>Defensive Positioning</h3>
+        <p>Defensive stance, on-ball pressure, closeouts, and help-side positioning. Defense wins games — we build the habits that coaches love.</p>
+        <span class="drill-tag">All Levels</span>
+      </div>
+      <div class="drill-card">
+        <div class="drill-icon">🧠</div>
+        <h3>Game Confidence & Mindset</h3>
+        <p>Mental reps matter. Players learn to handle mistakes, compete under pressure, and build the confidence that translates directly to game performance.</p>
+        <span class="drill-tag">Every Session</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- WHAT TO EXPECT -->
+  <div class="section">
+    <div class="section-eyebrow">For Parents</div>
+    <h2 class="section-title">What to expect <em>first session.</em></h2>
+    <p class="section-subtitle">If this is your player's first time training with Coach Ty, here's exactly how it goes.</p>
+
+    <div class="expect-grid">
+      <div class="expect-card">
+        <div class="expect-number">01</div>
+        <h3>Arrive Ready to Play</h3>
+        <p>Athletic shoes and a water bottle are all you need. Coach Ty brings all balls and equipment. Show up 5 minutes early if it's your first session.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-number">02</div>
+        <h3>Assessment First</h3>
+        <p>The first 10–15 minutes, Coach Ty watches your player move and handles the ball. No pressure — it's just about seeing where they are so training can be built around them.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-number">03</div>
+        <h3>Real Work, Real Fun</h3>
+        <p>The rest of the session dives straight into fundamentals. Players are challenged — but in a way that keeps energy high and confidence building from rep one.</p>
+      </div>
+      <div class="expect-card">
+        <div class="expect-number">04</div>
+        <h3>Parent Recap</h3>
+        <p>After the session, Coach Ty gives you a quick summary — what stood out, what needs work, and what the plan looks like going forward. No guessing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready to get <em>started?</em></h2>
+    <p>The first session is completely free. No sign-ups, no commitment, no credit card. Just bring your player out and see what Hardwood Academy is about.</p>
+    <a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/contact.html" class="btn btn-primary">Book the Free Session →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/" class="nav-logo">
+      <div class="nav-logo-badge">HA</div>
+      <span class="nav-logo-text">Hardwood Academy</span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/about.html">About</a></li>
+      <li><a href="training.html">Training</a></li>
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/services.html">Services</a></li>
+      <li><a href="https://tyschroeder86-droid.github.io/Hardwood-Academy/contact.html">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2025 Hardwood Academy · Coached by Ty Schroeder</span>
+  </footer>
+
+</body>
+</html>
