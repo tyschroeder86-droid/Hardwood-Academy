@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hardwood Academy Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    /* Email-safe reset */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { margin: 0; padding: 0; background: #F0EBE1; font-family: 'DM Sans', Georgia, sans-serif; -webkit-text-size-adjust: 100%; }
+
+    .email-wrap { max-width: 620px; margin: 0 auto; padding: 2rem 1rem; }
+
+    /* ── HEADER ── */
+    .header {
+      background: #0A0A0A;
+      border-radius: 16px 16px 0 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header-bg {
+      background: #0A0A0A;
+      padding: 3rem 3rem 2.5rem;
+      position: relative;
+    }
+
+    /* Subtle grid overlay */
+    .header-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(244,80,10,0.07) 39px, rgba(244,80,10,0.07) 40px),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(244,80,10,0.07) 39px, rgba(244,80,10,0.07) 40px);
+      pointer-events: none;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-box {
+      width: 46px; height: 46px;
+      background: #F4500A;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      box-shadow: 0 0 24px rgba(244,80,10,0.5);
+    }
+
+    .logo-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: #fff;
+      line-height: 1;
+    }
+    .logo-name span { color: #F4500A; }
+
+    .issue-badge {
+      margin-left: auto;
+      background: rgba(244,80,10,0.15);
+      border: 1px solid rgba(244,80,10,0.3);
+      color: #FF6B2B;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
+    }
+
+    .hero-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #F4500A;
+      margin-bottom: 0.9rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-label::before { content: ''; display: inline-block; width: 16px; height: 2px; background: #F4500A; }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 4.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: #F4500A;
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #888880;
+      margin-top: 1.2rem;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Orange bottom accent bar */
+    .header-accent {
+      height: 5px;
+      background: linear-gradient(90deg, #F4500A, #FF6B2B, #C03A00);
+    }
+
+    /* ── BODY CONTENT ── */
+    .body-wrap { background: #fff; padding: 3rem; }
+
+    /* Section label */
+    .slabel {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #F4500A;
+      margin-bottom: 0.8rem;
+    }
+    .slabel::before { content: ''; display: inline-block; width: 14px; height: 2px; background: #F4500A; }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: #0A0A0A;
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: normal; color: #F4500A; }
+
+    .body-text {
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #555;
+    }
+    .body-text strong { color: #0A0A0A; font-weight: 600; }
+    .body-text + .body-text { margin-top: 1rem; }
+
+    .divider { height: 1px; background: #f0ece4; margin: 2.5rem 0; }
+
+    /* ── PROGRAMS ── */
+    .program-block {
+      background: #F9F6F1;
+      border: 1px solid #EDE8DE;
+      border-left: 4px solid #F4500A;
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .prog-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem; }
+    .prog-name { font-weight: 700; font-size: 1rem; color: #0A0A0A; }
+    .prog-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #F4500A; letter-spacing: 0.04em; }
+    .prog-desc { font-size: 0.85rem; color: #777; line-height: 1.6; }
+
+    .popular-pill {
+      display: inline-block;
+      background: #F4500A;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* ── QUOTE BLOCK ── */
+    .quote-block {
+      background: #0A0A0A;
+      border-radius: 12px;
+      padding: 2.2rem;
+      margin: 2.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-block::before {
+      content: '"';
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      color: rgba(244,80,10,0.12);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .quote-text {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.65;
+      color: #F5F0E8;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1rem;
+    }
+    .quote-attr { font-size: 0.78rem; color: #888880; position: relative; z-index: 1; }
+    .quote-attr strong { color: #F4500A; }
+
+    /* ── CURRICULUM ── */
+    .skill-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin: 1.2rem 0;
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.87rem;
+      color: #333;
+      font-weight: 500;
+    }
+    .skill-item::before { content: '✓'; color: #F4500A; font-weight: 700; font-size: 0.85rem; }
+
+    /* ── CTA BUTTON ── */
+    .cta-wrap { text-align: center; margin: 2.5rem 0; }
+    .cta-btn {
+      display: inline-block;
+      background: #F4500A;
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      box-shadow: 0 6px 24px rgba(244,80,10,0.35);
+    }
+
+    .cta-sub { font-size: 0.78rem; color: #aaa; margin-top: 0.7rem; }
+
+    /* ── FREE SESSION BANNER ── */
+    .free-banner {
+      background: linear-gradient(135deg, #F4500A, #FF6B2B);
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      margin: 2.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .free-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,0,0,0.05) 39px, rgba(0,0,0,0.05) 40px),
+                  repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,0,0,0.05) 39px, rgba(0,0,0,0.05) 40px);
+    }
+    .free-banner-content { position: relative; z-index: 1; }
+    .free-banner-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .free-banner-body { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 1.5rem; }
+    .free-btn {
+      display: inline-block;
+      background: #0A0A0A;
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 7px;
+    }
+
+    /* ── FOOTER ── */
+    .newsletter-footer {
+      background: #0A0A0A;
+      border-radius: 0 0 16px 16px;
+      padding: 2rem 3rem;
+      text-align: center;
+    }
+    .nf-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; margin-bottom: 0.5rem; }
+    .nf-logo span { color: #F4500A; }
+    .nf-tagline { font-size: 0.78rem; color: #888880; margin-bottom: 1.2rem; line-height: 1.5; }
+    .nf-link { display: inline-block; color: #F4500A; text-decoration: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; border-bottom: 1px solid rgba(244,80,10,0.3); padding-bottom: 0.1rem; }
+    .nf-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 1.2rem 0; }
+    .nf-copy { font-size: 0.7rem; color: rgba(136,136,128,0.4); }
+    .nf-unsub { font-size: 0.7rem; color: rgba(136,136,128,0.35); margin-top: 0.4rem; }
+  </style>
+</head>
+<body>
+<div class="email-wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-bg">
+      <div class="logo-row">
+        <div class="logo-box">HA</div>
+        <div class="logo-name">Hardwood <span>Academy</span></div>
+        <div class="issue-badge">Issue No. 01</div>
+      </div>
+
+      <div class="hero-label">Your Player's Edge Starts Here</div>
+      <div class="hero-headline">
+        Train Smarter.<br />
+        <em>Rise Faster.</em>
+      </div>
+      <p class="hero-sub">The Hardwood Academy newsletter — elite youth basketball training insights, program updates, and exclusive offers for families who are serious about their player's growth.</p>
+    </div>
+    <div class="header-accent"></div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-wrap">
+
+    <div class="slabel">From Coach Ty</div>
+    <h2>Is your player getting<br /><em>lost in the crowd?</em></h2>
+
+    <p class="body-text">
+      Here's the honest truth about most youth basketball programs: <strong>your kid gets maybe 5 minutes of real coaching attention per practice.</strong> The rest of the time they're running drills in a line, waiting their turn, or lost in a sea of 20 other players.
+    </p>
+    <p class="body-text" style="margin-top: 1rem;">
+      That's not how great players are built. Great players are built through <strong>focused, personalized, high-rep work</strong> with a coach who actually knows their game — their strengths, their weaknesses, their tendencies.
+    </p>
+    <p class="body-text" style="margin-top: 1rem;">
+      That's exactly what Hardwood Academy delivers. Every session. Every rep.
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- PROGRAMS -->
+    <div class="slabel">Programs & Pricing</div>
+    <h2>Three ways to<br /><em>train with us.</em></h2>
+
+    <div class="program-block">
+      <div class="prog-header">
+        <div class="prog-name">1-on-1 Personal Training <span class="popular-pill">Most Popular</span></div>
+        <div class="prog-price">$60 / session</div>
+      </div>
+      <div class="prog-desc">60 minutes of fully personalized coaching. Custom drill plan, real-time feedback every rep, progress tracked session to session. The fastest way to improve — period.</div>
+    </div>
+
+    <div class="program-block">
+      <div class="prog-header">
+        <div class="prog-name">Small Group Training</div>
+        <div class="prog-price">$30 / player</div>
+      </div>
+      <div class="prog-desc">Maximum 3 players. Competitive drills and games — perfect for friends or teammates. Affordable without sacrificing quality.</div>
+    </div>
+
+    <div class="program-block">
+      <div class="prog-header">
+        <div class="prog-name">Starter Package</div>
+        <div class="prog-price">$200 / 4 sessions</div>
+      </div>
+      <div class="prog-desc">Four 1-on-1 sessions bundled. Includes assessment + take-home drill guide. Save $40 vs. individual sessions. The perfect way to get started.</div>
+    </div>
+
+    <div class="cta-wrap">
+      <a href="https://hardwoodacademy.netlify.app/services" class="cta-btn">View All Programs →</a>
+      <div class="cta-sub">Full pricing details at hardwoodacademy.netlify.app</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TESTIMONIAL -->
+    <div class="quote-block">
+      <div class="quote-text">"My son went from barely able to dribble to confidently playing in his first rec league — in just two months. The personal attention is unlike anything else we've tried."</div>
+      <div class="quote-attr">— Jamie M., <strong>Parent of 9-year-old</strong></div>
+    </div>
+
+    <!-- CURRICULUM -->
+    <div class="slabel">The Curriculum</div>
+    <h2>Every session covers<br /><em>what matters.</em></h2>
+    <p class="body-text">No filler. No time-wasting. Every minute of every session is spent on skills that directly translate to game performance:</p>
+
+    <div class="skill-list">
+      <div class="skill-item">Ball Handling & Dribbling</div>
+      <div class="skill-item">Shooting Form & Mechanics</div>
+      <div class="skill-item">Passing & Court Vision</div>
+      <div class="skill-item">Footwork & Athleticism</div>
+      <div class="skill-item">Defensive Positioning</div>
+      <div class="skill-item">Game Confidence & Mindset</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- WHO IT'S FOR -->
+    <div class="slabel">Who We Train</div>
+    <h2>Built for players<br /><em>ages 6 to 14.</em></h2>
+    <p class="body-text">
+      <strong>No experience needed.</strong> We work with complete beginners picking up a basketball for the first time and with experienced players preparing for school tryouts. All skill levels. All positions. One-on-one attention means your player gets exactly what they need.
+    </p>
+    <p class="body-text" style="margin-top:1rem;">
+      Based in <strong>State College, PA</strong> — sessions held at local gyms and outdoor courts with flexible evening and weekend scheduling.
+    </p>
+
+    <!-- FREE SESSION BANNER -->
+    <div class="free-banner">
+      <div class="free-banner-content">
+        <div class="free-banner-headline">First Session Is Free.</div>
+        <div class="free-banner-body">No commitment. No credit card. No pressure. Just bring your player out and let the work speak for itself. One session could change the trajectory of their entire game.</div>
+        <a href="https://hardwoodacademy.netlify.app/contact" class="free-btn">Book the Free Session →</a>
+      </div>
+    </div>
+
+    <p class="body-text" style="text-align:center; color:#aaa; font-size:0.82rem;">
+      Questions? Reply to this email or visit<br />
+      <a href="https://hardwoodacademy.netlify.app" style="color:#F4500A; font-weight:600;">hardwoodacademy.netlify.app</a>
+    </p>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="newsletter-footer">
+    <div class="nf-logo">Hardwood <span>Academy</span></div>
+    <div class="nf-tagline">Elite youth basketball training for players ages 6–14.<br />State College, PA · Coached by Ty Schroeder</div>
+    <a href="https://hardwoodacademy.netlify.app" class="nf-link">hardwoodacademy.netlify.app</a>
+    <div class="nf-divider"></div>
+    <div class="nf-copy">© 2025 Hardwood Academy · hello@hardwoodacademy.com</div>
+    <div class="nf-unsub">You received this because you signed up for Hardwood Academy updates. <a href="#" style="color: rgba(136,136,128,0.5);">Unsubscribe</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services & Pricing | Hardwood Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #F4500A; --orange-light: #FF6B2B; --black: #0A0A0A;
+      --dark: #111111; --dark2: #1A1A1A; --cream: #F5F0E8;
+      --cream2: #EDE8DE; --mid: #888880; --white: #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--cream); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.85); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(244,80,10,0.12);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .logo-icon { width: 44px; height: 44px; background: var(--orange); border-radius: 10px; display: grid; place-items: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--white); box-shadow: 0 0 20px rgba(244,80,10,0.4); }
+    .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--white); line-height: 1; }
+    .logo-text span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--cream2); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--orange-light); }
+    .nav-cta { background: var(--orange); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 6px; font-weight: 600 !important; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--orange-light) !important; }
+
+    .page-hero {
+      padding: 9rem 3rem 5rem;
+      background: var(--dark);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(244,80,10,0.05) 79px, rgba(244,80,10,0.05) 80px),
+                  repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(244,80,10,0.05) 79px, rgba(244,80,10,0.05) 80px);
+    }
+    .page-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .section-label { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--orange); }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.92; letter-spacing: 0.02em; color: var(--white); }
+    h1 em { font-style: normal; color: var(--orange); }
+    .hero-sub { max-width: 560px; margin-top: 1.5rem; font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: var(--mid); }
+
+    section { padding: 6rem 3rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 0.95; letter-spacing: 0.02em; color: var(--white); margin-bottom: 0.5rem; }
+    h2 em { font-style: normal; color: var(--orange); }
+
+    /* Pricing Cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+      align-items: start;
+    }
+
+    .price-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
+    .price-card.featured {
+      border-color: var(--orange);
+      box-shadow: 0 0 40px rgba(244,80,10,0.15);
+      transform: scale(1.02);
+    }
+    .price-card.featured:hover { transform: scale(1.02) translateY(-6px); }
+
+    .card-header {
+      padding: 2rem 2rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .card-header.featured-bg { background: linear-gradient(135deg, rgba(244,80,10,0.15), rgba(244,80,10,0.04)); }
+
+    .popular-badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.7rem;
+      border-radius: 4px;
+      margin-bottom: 0.9rem;
+    }
+
+    .card-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--white); margin-bottom: 0.5rem; }
+    .card-tagline { font-size: 0.85rem; color: var(--mid); line-height: 1.5; }
+
+    .card-price-block { padding: 1.8rem 2rem 0; }
+    .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 3.2rem; color: var(--orange); letter-spacing: 0.03em; line-height: 1; }
+    .price-unit { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--mid); font-weight: 400; margin-top: 0.2rem; }
+    .price-savings { display: inline-block; background: rgba(244,80,10,0.12); color: var(--orange-light); font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 4px; margin-top: 0.6rem; }
+
+    .card-body { padding: 1.5rem 2rem 2rem; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.88rem; color: var(--cream2); line-height: 1.5; }
+    .feature-list li::before { content: '✓'; color: var(--orange); font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+    .btn-book {
+      display: block; text-align: center; text-decoration: none;
+      font-weight: 600; font-size: 0.88rem; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 0.9rem;
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .btn-book-primary { background: var(--orange); color: var(--white); box-shadow: 0 4px 20px rgba(244,80,10,0.3); }
+    .btn-book-primary:hover { background: var(--orange-light); box-shadow: 0 6px 28px rgba(244,80,10,0.5); }
+    .btn-book-ghost { border: 1px solid rgba(255,255,255,0.15); color: var(--cream2); }
+    .btn-book-ghost:hover { border-color: var(--orange); color: var(--orange-light); }
+
+    /* Why These Prices */
+    .pricing-rationale { background: var(--dark); }
+    .rationale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .rationale-body { font-size: 1rem; line-height: 1.8; color: var(--mid); font-weight: 300; }
+    .rationale-body p + p { margin-top: 1.2rem; }
+    .rationale-body strong { color: var(--cream); font-weight: 500; }
+
+    .breakdown-table { width: 100%; border-collapse: collapse; }
+    .breakdown-table th { text-align: left; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .breakdown-table td { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; color: var(--cream2); vertical-align: top; }
+    .breakdown-table td:last-child { color: var(--orange); font-weight: 600; text-align: right; }
+
+    /* Curriculum */
+    .curriculum-section { background: var(--black); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
+    .skill-chip {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      display: flex; align-items: center; gap: 0.9rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .skill-chip:hover { border-color: rgba(244,80,10,0.3); background: rgba(244,80,10,0.05); }
+    .skill-emoji { font-size: 1.4rem; }
+    .skill-name { font-weight: 500; font-size: 0.9rem; color: var(--cream2); }
+
+    /* FAQ */
+    .faq-section { background: var(--dark); }
+    .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--dark2); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; margin-bottom: 0.75rem; }
+    .faq-q { padding: 1.3rem 1.5rem; font-weight: 500; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--cream); transition: color 0.2s; user-select: none; }
+    .faq-q:hover { color: var(--orange-light); }
+    .faq-q .arrow { font-size: 1.1rem; transition: transform 0.3s; }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; font-size: 0.88rem; color: var(--mid); line-height: 1.7; padding: 0 1.5rem; }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.3rem; }
+
+    /* CTA */
+    .cta-section { background: var(--orange); padding: 5rem 3rem; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(0,0,0,0.06) 79px, rgba(0,0,0,0.06) 80px), repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(0,0,0,0.06) 79px, rgba(0,0,0,0.06) 80px); }
+    .cta-inner { max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .cta-section h2 { color: var(--white); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem; }
+    .cta-section h2 em { color: var(--black); }
+    .cta-body { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2.2rem; }
+    .btn-dark { background: var(--black); color: var(--white); text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 1rem 2.4rem; border-radius: 8px; display: inline-block; transition: background 0.2s, transform 0.15s; }
+    .btn-dark:hover { background: #222; transform: translateY(-2px); }
+
+    footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 3rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: var(--mid); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--orange-light); }
+    .footer-copy { font-size: 0.78rem; color: rgba(136,136,128,0.5); }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .page-hero { padding: 7rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
+      .rationale-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">HA</div>
+    <div class="logo-text">Hardwood <span>Academy</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/about">About</a></li>
+    <li><a href="/features">Training</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/contact" class="nav-cta">Book Free Session</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">Services & Pricing</div>
+    <h1>Invest In<br /><em>Your Player.</em></h1>
+    <p class="hero-sub">Transparent pricing. No hidden fees. Every dollar goes directly into personalized coaching that produces real, measurable improvement.</p>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section style="background: var(--black); padding-top: 5rem;">
+  <div class="section-inner">
+    <div class="section-label">Choose Your Program</div>
+    <h2>Three ways to <em>train.</em></h2>
+    <div class="pricing-grid">
+
+      <!-- 1-on-1 -->
+      <div class="price-card featured reveal">
+        <div class="card-header featured-bg">
+          <div class="popular-badge">Most Popular</div>
+          <div class="card-name">1-on-1 Personal Training</div>
+          <div class="card-tagline">The fastest way to improve. Fully dedicated coaching — every minute is yours.</div>
+        </div>
+        <div class="card-price-block">
+          <div class="price-amount">$60</div>
+          <div class="price-unit">per 60-minute session</div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>60-minute session, fully personalized</li>
+            <li>Custom drill plan built around your player's weak spots</li>
+            <li>Real-time feedback every single rep</li>
+            <li>Progress tracked session to session</li>
+            <li>Works for all skill levels — beginner to advanced</li>
+            <li>Flexible scheduling: evenings & weekends</li>
+          </ul>
+          <a href="/contact" class="btn-book btn-book-primary">Book This Program</a>
+        </div>
+      </div>
+
+      <!-- Small Group -->
+      <div class="price-card reveal">
+        <div class="card-header">
+          <div class="card-name">Small Group Training</div>
+          <div class="card-tagline">3-player max. Competitive, affordable, and a blast for teammates and friends.</div>
+        </div>
+        <div class="card-price-block">
+          <div class="price-amount">$30</div>
+          <div class="price-unit">per player / per session</div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>Maximum 3 players per session</li>
+            <li>Competitive drills and games</li>
+            <li>Perfect for friends or teammates</li>
+            <li>More affordable than 1-on-1</li>
+            <li>Still highly focused — not a large group</li>
+            <li>Great for building team chemistry</li>
+          </ul>
+          <a href="/contact" class="btn-book btn-book-ghost">Book This Program</a>
+        </div>
+      </div>
+
+      <!-- Starter Package -->
+      <div class="price-card reveal">
+        <div class="card-header">
+          <div class="card-name">Starter Package</div>
+          <div class="card-tagline">Best value for new players. Four sessions bundled — save $40 vs individual rate.</div>
+        </div>
+        <div class="card-price-block">
+          <div class="price-amount">$200</div>
+          <div class="price-unit">for 4 sessions (1-on-1)</div>
+          <div class="price-savings">Save $40 vs. single session rate</div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>4 × 60-minute 1-on-1 sessions</li>
+            <li>Assessment session included in week 1</li>
+            <li>Perfect intro for first-time players</li>
+            <li>Take-home drill guide after package</li>
+            <li>Progress report at end of package</li>
+            <li>Priority scheduling</li>
+          </ul>
+          <a href="/contact" class="btn-book btn-book-ghost">Book This Program</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY THESE PRICES -->
+<section class="pricing-rationale">
+  <div class="section-inner">
+    <div class="section-label">Pricing Philosophy</div>
+    <div class="rationale-grid">
+      <div>
+        <h2>Why these<br /><em>numbers?</em></h2>
+        <div class="rationale-body" style="margin-top:1.5rem;">
+          <p>Pricing was built around one goal: <strong>making elite coaching accessible to real families</strong> while ensuring every session delivers genuine value.</p>
+          <p>At <strong>$60/session</strong>, 1-on-1 training is priced significantly below larger training facilities and private coaches in the area — while offering the same (or better) level of personal attention. You get a dedicated coach for every minute of every session.</p>
+          <p>The <strong>Starter Package at $200</strong> bundles four sessions for new families who want to try the program with commitment. At $50/session effectively, it's our best per-session rate — and comes with an assessment and drill guide included.</p>
+          <p>The <strong>Small Group rate at $30/player</strong> brings quality training within reach for families on tighter budgets, while keeping sessions small enough that every player still gets real coaching attention.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th>Program</th>
+              <th>Includes</th>
+              <th style="text-align:right;">Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--cream);">1-on-1</strong></td>
+              <td style="color:var(--mid);">60 min, personalized</td>
+              <td>$60 / session</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--cream);">Small Group</strong></td>
+              <td style="color:var(--mid);">Max 3 players</td>
+              <td>$30 / player</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--cream);">Starter Pack</strong></td>
+              <td style="color:var(--mid);">4 sessions + assessment</td>
+              <td>$200 total</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--orange);">Free Intro</strong></td>
+              <td style="color:var(--mid);">No commitment</td>
+              <td>$0</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--dark2); border-radius: 10px; border-left: 3px solid var(--orange);">
+          <div style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); font-weight:600; margin-bottom:0.5rem;">Target Market</div>
+          <div style="font-size:0.88rem; color:var(--mid); line-height:1.7;">Youth ages 6–14 in the State College, PA area. Parents who want real improvement for their child — not just activity — and are willing to invest in focused, personalized coaching that group sports teams can't provide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-section">
+  <div class="section-inner">
+    <div class="section-label">What We Train</div>
+    <h2>Every session covers<br /><em>what matters.</em></h2>
+    <div class="skills-grid">
+      <div class="skill-chip reveal"><span class="skill-emoji">🏀</span><span class="skill-name">Ball Handling & Dribbling</span></div>
+      <div class="skill-chip reveal"><span class="skill-emoji">🎯</span><span class="skill-name">Shooting Form & Mechanics</span></div>
+      <div class="skill-chip reveal"><span class="skill-emoji">👁️</span><span class="skill-name">Passing & Court Vision</span></div>
+      <div class="skill-chip reveal"><span class="skill-emoji">⚡</span><span class="skill-name">Footwork & Athleticism</span></div>
+      <div class="skill-chip reveal"><span class="skill-emoji">🛡️</span><span class="skill-name">Defensive Positioning</span></div>
+      <div class="skill-chip reveal"><span class="skill-emoji">🧠</span><span class="skill-name">Game Confidence & Mindset</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <div class="section-label">Common Questions</div>
+    <h2>Before you <em>book.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">What age groups do you work with? <span class="arrow">▾</span></div>
+        <div class="faq-a">I train kids ages 6 to 14. No prior experience needed — all skill levels are welcome from complete beginners to players looking to sharpen their varsity-level game.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where do sessions take place? <span class="arrow">▾</span></div>
+        <div class="faq-a">Sessions are held at local gyms and outdoor courts in the State College area. Exact location details are confirmed after booking based on availability and your preference.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What should my child bring? <span class="arrow">▾</span></div>
+        <div class="faq-a">Athletic shoes, a water bottle, and a willingness to work hard. Coach Ty brings all balls and equipment — you just need to show up ready to go.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is the first session really free? <span class="arrow">▾</span></div>
+        <div class="faq-a">Yes — completely free, no commitment required. The first session is a chance for your player to experience the training style and for Coach Ty to assess where they are. You only pay if you decide to continue.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I upgrade from the Starter Package to regular sessions? <span class="arrow">▾</span></div>
+        <div class="faq-a">Absolutely. Many players start with the Starter Package and transition directly into weekly 1-on-1 sessions. Just let Coach Ty know your goals after the assessment session.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Start with <em>zero risk.</em></h2>
+    <p class="cta-body">The first session is completely free. No sign-ups, no credit card, no commitment. Just bring your player out and see what Hardwood Academy can do for their game.</p>
+    <a href="/contact" class="btn-dark">Book the Free Session →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-icon">HA</div>
+      <div class="logo-text" style="font-size:1.1rem;">Hardwood <span>Academy</span></div>
+    </a>
+    <ul class="footer-links">
+      <li><a href="/about">About</a></li>
+      <li><a href="/features">Training</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Hardwood Academy · Coached by Ty Schroeder</div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

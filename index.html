@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hardwood Academy — Elite Youth Basketball Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #F4500A;
+      --orange-light: #FF6B2B;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --cream: #F5F0E8;
+      --cream2: #EDE8DE;
+      --mid: #888880;
+      --white: #FFFFFF;
+      --court-line: rgba(244,80,10,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(244,80,10,0.12);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--orange);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(244,80,10,0.4);
+    }
+
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .logo-text span { color: var(--orange); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream2);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange-light); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--orange-light) !important;
+      box-shadow: 0 4px 20px rgba(244,80,10,0.45) !important;
+      color: var(--white) !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 3rem 5rem;
+    }
+
+    /* Court texture background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.0) 60%, var(--black) 100%),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, var(--court-line) 79px, var(--court-line) 80px),
+        repeating-linear-gradient(0deg, transparent, transparent 79px, var(--court-line) 79px, var(--court-line) 80px);
+      z-index: 0;
+    }
+
+    /* Big court arc */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120vw;
+      height: 120vw;
+      border: 2px solid rgba(244,80,10,0.08);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s forwards;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-sub {
+      max-width: 500px;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--mid);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 2.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border-radius: 8px;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 4px 24px rgba(244,80,10,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--orange-light);
+      box-shadow: 0 6px 32px rgba(244,80,10,0.55);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      color: var(--cream2);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .btn-ghost:hover { color: var(--orange-light); gap: 0.8rem; }
+    .btn-ghost::after { content: '→'; font-size: 1.1rem; }
+
+    /* Floating ball ornament */
+    .ball-ornament {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(38vw, 420px);
+      height: min(38vw, 420px);
+      opacity: 0;
+      animation: fadeIn 1s ease 0.8s forwards, float 6s ease-in-out 1.8s infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-18px); }
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      position: relative;
+      z-index: 2;
+      background: var(--dark2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 2.2rem 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .stat-item {
+      flex: 1;
+      max-width: 220px;
+      text-align: center;
+      padding: 0.5rem 1.5rem;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--orange);
+      line-height: 1;
+      letter-spacing: 0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.3rem;
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 7rem 3rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    /* ── WHY SECTION ── */
+    .why-section {
+      background: var(--dark);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .why-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--mid);
+      font-weight: 300;
+    }
+
+    .why-body p + p { margin-top: 1.2rem; }
+
+    .why-body strong { color: var(--cream); font-weight: 500; }
+
+    .pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .pillar {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 3px solid var(--orange);
+      border-radius: 8px;
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .pillar:hover {
+      background: rgba(244,80,10,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .pillar-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--orange);
+      line-height: 1;
+      min-width: 2rem;
+    }
+
+    .pillar-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--cream);
+      margin-bottom: 0.25rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.85rem;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* ── PROGRAMS PREVIEW ── */
+    .programs-section { background: var(--black); }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .program-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .program-card.featured {
+      border-color: var(--orange);
+      box-shadow: 0 0 30px rgba(244,80,10,0.12);
+    }
+
+    .program-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+    }
+
+    .program-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(244,80,10,0.12);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .program-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .program-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--orange);
+      letter-spacing: 0.04em;
+    }
+    .program-price span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      color: var(--mid);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .program-desc {
+      font-size: 0.85rem;
+      color: var(--mid);
+      line-height: 1.6;
+      margin: 1rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1rem;
+    }
+
+    .program-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .program-link:hover { gap: 0.7rem; }
+    .program-link::after { content: '→'; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials-section::before {
+      content: '"';
+      position: absolute;
+      top: -2rem;
+      left: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20rem;
+      color: rgba(244,80,10,0.05);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .testimonial-stars {
+      color: var(--orange);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--cream2);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: grid;
+      place-items: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--cream);
+    }
+
+    .author-role {
+      font-size: 0.75rem;
+      color: var(--mid);
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-section {
+      background: var(--orange);
+      padding: 5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(0,0,0,0.06) 79px, rgba(0,0,0,0.06) 80px),
+        repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(0,0,0,0.06) 79px, rgba(0,0,0,0.06) 80px);
+    }
+
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section .section-heading {
+      color: var(--white);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section .section-heading em { color: var(--black); }
+
+    .cta-body {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2.4rem;
+      border-radius: 8px;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-dark:hover {
+      background: #222;
+      transform: translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem 3rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--mid);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange-light); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(136,136,128,0.5);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .ball-ornament { display: none; }
+      .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .programs-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      section { padding: 5rem 1.5rem; }
+      .stats-strip { flex-wrap: wrap; gap: 1rem; padding: 1.5rem; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-icon">HA</div>
+      <div class="logo-text">Hardwood <span>Academy</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/about">About</a></li>
+      <li><a href="/features">Training</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/contact" class="nav-cta">Book Free Session</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Youth Basketball Training · State College, PA</div>
+      <h1 class="hero-headline">
+        Build Your<br />
+        <em>Game.</em><br />
+        Own The Court.
+      </h1>
+      <p class="hero-sub">
+        Hardwood Academy delivers elite 1-on-1 and small-group basketball training for youth ages 6–14. Real skills. Real reps. Real results — coached by Ty Schroeder.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary">Book Free Session</a>
+        <a href="/features" class="btn-ghost">See Programs</a>
+      </div>
+    </div>
+
+    <!-- Animated basketball SVG -->
+    <svg class="ball-ornament" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ballGrad" cx="38%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#FF6B2B"/>
+          <stop offset="100%" stop-color="#C03A00"/>
+        </radialGradient>
+        <clipPath id="ballClip">
+          <circle cx="210" cy="210" r="200"/>
+        </clipPath>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Glow ring -->
+      <circle cx="210" cy="210" r="210" fill="rgba(244,80,10,0.08)"/>
+      <circle cx="210" cy="210" r="205" fill="rgba(244,80,10,0.05)"/>
+      <!-- Ball body -->
+      <circle cx="210" cy="210" r="200" fill="url(#ballGrad)"/>
+      <!-- Seam lines -->
+      <g clip-path="url(#ballClip)" stroke="#C03A00" stroke-width="3.5" fill="none" opacity="0.7">
+        <!-- Vertical seam -->
+        <path d="M210,10 C155,80 155,340 210,410"/>
+        <path d="M210,10 C265,80 265,340 210,410"/>
+        <!-- Horizontal seam -->
+        <path d="M10,210 C80,155 340,155 410,210"/>
+        <path d="M10,210 C80,265 340,265 410,210"/>
+      </g>
+      <!-- Shine -->
+      <ellipse cx="155" cy="140" rx="55" ry="30" fill="rgba(255,255,255,0.12)" transform="rotate(-30 155 140)"/>
+    </svg>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-item reveal">
+      <div class="stat-number">6–14</div>
+      <div class="stat-label">Ages We Train</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Programs Available</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">$0</div>
+      <div class="stat-label">First Session Cost</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number">1:1</div>
+      <div class="stat-label">Personal Coaching</div>
+    </div>
+  </div>
+
+  <!-- WHY HARDWOOD -->
+  <section class="why-section">
+    <div class="section-inner">
+      <div class="section-label">Why Hardwood Academy</div>
+      <h2 class="section-heading">Not a camp.<br /><em>A commitment.</em></h2>
+      <div class="why-grid">
+        <div class="why-body reveal">
+          <p>Most youth basketball programs shuffle kids through group drills where they blend into the crowd and never get the focused instruction they need. <strong>That's not how real improvement happens.</strong></p>
+          <p>At Hardwood Academy, every single session is built around <strong>your player</strong> — their strengths, their weak spots, their goals. No templates. No cookie-cutter curricula. Just deliberate, high-rep skill work that translates directly to game performance.</p>
+          <p>Founded and coached by Ty Schroeder, Hardwood Academy has one mission: develop young players the right way so they step onto the court with confidence, skill, and love for the game.</p>
+          <br />
+          <a href="/about" class="btn-ghost" style="display:inline-flex;">Meet Coach Ty</a>
+        </div>
+        <div class="pillars reveal">
+          <div class="pillar">
+            <div class="pillar-num">01</div>
+            <div>
+              <div class="pillar-title">Fundamentals First</div>
+              <div class="pillar-desc">Every great player is built on the basics. We master them before moving on — no shortcuts.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">02</div>
+            <div>
+              <div class="pillar-title">Personalized for Every Player</div>
+              <div class="pillar-desc">We meet players where they are — beginner or advanced — and build a plan that fits them, not a template.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">03</div>
+            <div>
+              <div class="pillar-title">Progress Tracked Every Session</div>
+              <div class="pillar-desc">We document improvements each visit so you always see exactly how your player is growing.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">04</div>
+            <div>
+              <div class="pillar-title">Fun Is Non-Negotiable</div>
+              <div class="pillar-desc">Kids play their best when they enjoy it. We keep energy high, pressure low, and the work meaningful.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS PREVIEW -->
+  <section class="programs-section">
+    <div class="section-inner">
+      <div class="section-label">Programs</div>
+      <h2 class="section-heading">Training built for<br /><em>every level.</em></h2>
+      <div class="programs-grid">
+        <div class="program-card featured reveal">
+          <div class="program-icon">🏀</div>
+          <div class="program-name">1-on-1 Personal Training</div>
+          <div class="program-price">$60 <span>/ session</span></div>
+          <div class="program-desc">The most effective way to improve — period. 60 minutes of fully personalized coaching with custom drills and real-time feedback every rep.</div>
+          <a href="/features" class="program-link">Learn More</a>
+        </div>
+        <div class="program-card reveal">
+          <div class="program-icon">👥</div>
+          <div class="program-name">Small Group Training</div>
+          <div class="program-price">$30 <span>/ player</span></div>
+          <div class="program-desc">Max 3 players. Competitive drills, team dynamics, and a blast — perfect for friends or teammates looking to level up together.</div>
+          <a href="/features" class="program-link">Learn More</a>
+        </div>
+        <div class="program-card reveal">
+          <div class="program-icon">📦</div>
+          <div class="program-name">Starter Package</div>
+          <div class="program-price">$200 <span>/ 4 sessions</span></div>
+          <div class="program-desc">Four 1-on-1 sessions bundled together — includes an assessment session and a take-home drill guide. Save $40 vs individual rate.</div>
+          <a href="/features" class="program-link">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-inner">
+      <div class="section-label">What Parents Say</div>
+      <h2 class="section-heading">Results <em>speak.</em></h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"My son went from barely able to dribble to confidently playing in his first rec league — in just two months. The personal attention is unlike anything else."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">JM</div>
+            <div>
+              <div class="author-name">Jamie M.</div>
+              <div class="author-role">Parent of 9-year-old</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"Ty actually cares. He remembers what my daughter struggled with last session and picks up exactly where they left off. The progress tracking is a game changer."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">SR</div>
+            <div>
+              <div class="author-name">Sandra R.</div>
+              <div class="author-role">Parent of 12-year-old</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-quote">"We did the Starter Package as a trial and now we're booking every week. Worth every penny — our son actually asks to go to practice now."</div>
+          <div class="testimonial-author">
+            <div class="author-avatar">DK</div>
+            <div>
+              <div class="author-name">Derek K.</div>
+              <div class="author-role">Parent of 11-year-old</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="section-heading">First session is <em>free.</em></h2>
+      <p class="cta-body">No commitment, no pressure. Just bring your player out and see what Hardwood Academy is all about. One session could change the whole trajectory of their game.</p>
+      <a href="/contact" class="btn-dark">Book the Free Session →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="/" class="nav-logo" style="text-decoration:none;">
+        <div class="logo-icon">HA</div>
+        <div class="logo-text" style="font-size:1.1rem;">Hardwood <span>Academy</span></div>
+      </a>
+      <ul class="footer-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/features">Training</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <div class="footer-copy">© 2025 Hardwood Academy · Coached by Ty Schroeder</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
